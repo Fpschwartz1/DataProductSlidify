@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Projectile Motion</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Projectile Motion">
+  <meta name="author" content="Fabiano Peruzzo Schwartz">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/coursera2.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Projectile Motion</h1>
+    <h2>Parabolic Trajectory</h2>
+    <p>Fabiano Peruzzo Schwartz<br/>Data Science Specialization</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Initial Concepts</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Projectile motion is a form of motion where an object or particle (called a projectile) moves in parabolic path.</p></li>
+<li><p>The path that the object follows is called its trajectory.</p></li>
+<li><p>The only force of significance that acts on the object is gravity, which acts downward to cause a downward acceleration. </p></li>
+<li><p>There are no horizontal forces needed to maintain the horizontal motion - consistent with the concept of inertia.</p></li>
+<li><p>The only relevant quantities that might vary from projectile to projectile then are initial velocity and initial position.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Equations</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>The equations below refer to a projectile which is launched in a \(\theta\) angle with an initial non-zero velocity (\(v_0\)) from the zero initial position (\(x_0=y_0=0\)). The acceleration (\(a\)) is due to gravity alone, i.e., there is no horizontal component (\(a_x=0\), \(a_y=-g\)).</p>
+
+<table>
+  <tr>
+    <td>
+        Horizontal Direction
+        $$x=x_0+v_{0x}t+\frac{1}{2}a_xt^2$$
+        $$x=v_0(cos{\theta})t$$
+        Vertical Direction
+        $$y=y_0+v_{0y}t+\frac{1}{2}a_yt^2$$
+        $$y=v_0(sin{\theta})t-\frac{1}{2}gt^2$$
+    </td>
+
+    <td>
+        <center>
+        <img src="assets/img/projectilemotion.png" alt="Mountain View" style="width:436px;height:289px">
+        </center>
+    </td>
+
+    <td>
+        <b>Duration</b>
+        $$t_{final}=\frac{2v_0sin\theta}{g}$$
+        <b>Maximum Range given $v_0$ and $\theta$</b>
+        $$R=v_0(cos{\theta})t_{final}$$
+        <b>Maximum Height given $v_0$ and $\theta$</b>
+        $$H=v_0(sin{\theta})\frac{t_{final}}{2}-\frac{1}{2}g({\frac{t_{final}}{2}})^2$$
+    </td>
+
+  </tr>
+</table>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Shiny Application</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>The proposed application simulates the projectile motion based on the previous equations and given the parameters \(g(m/s^2)\), \(v_0(m/s)\), and \(\theta(degrees)\).</p></li>
+<li><p>After entering the parameters you must press the submit button in order to simulate the trajectory of the projectile.</p></li>
+<li><p>Now, enjoy the simulation:</p>
+
+<ul>
+<li>Keep \(g\) and \(v_0\) constant and check that the max range occurs at \(45^{\circ}\). You can also verify that equal ranges occur for launch angles that exceed and fall short of \(45^{\circ}\) by equal amounts (e.g. \(40^{\circ}\) &amp; \(50^{\circ}\), \(30^{\circ}\) &amp; \(60^{\circ}\), \(0^{\circ}\) &amp; \(90^{\circ}\)).</li>
+<li>Keep \(v_0\) and \(\theta\) constant and verify the difference in range of a projectile launched from the surface of the Moon (\(g{\approx}1.6m/s^2\)) and another one launched from the surface of the Earth (\(g{\approx}9.8m/s^2\)).</li>
+<li>Try other possibilities.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Code Example</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The shiny app uses three R functions based on the equations of slide 3.</li>
+</ul>
+
+<pre><code class="r">duration &lt;- function(V, theta, g) 2 * V * sin(theta*pi/180) / g
+horizontal &lt;- function(V, theta, t) V * t * cos(theta*pi/180)
+vertical &lt;- function(V, theta, g, t) V * t * sin(theta*pi/180) - 1/2 * g * t^2
+</code></pre>
+
+<ul>
+<li>Consider \(g=9.8m/s^2\), \(v_0=10m/s\), and \({\theta}=45^{\circ}\). We can calculate the duration (\(t_{final}\)), the maximum range (\(R\)) and the maximum height (\(H\)) of the parabolic trajectory.</li>
+</ul>
+
+<pre><code class="r">g &lt;- 9.8; v0 &lt;- 10; theta &lt;- 45
+tfinal &lt;- duration(v0, theta, g)
+paste(&quot;tfinal =&quot;, round(tfinal,2), &quot;s ;&quot;, &quot;R = &quot;, round(horizontal(v0, theta, tfinal),2), &quot;m ;&quot;, 
+      &quot;H = &quot;, round(vertical(v0, theta, g, tfinal/2),2), &quot;m&quot;)
+</code></pre>
+
+<pre><code>## [1] &quot;tfinal = 1.44 s ; R =  10.2 m ; H =  2.55 m&quot;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Initial Concepts'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Equations'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Shiny Application'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Code Example'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
